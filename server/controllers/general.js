@@ -1,4 +1,8 @@
+const { $where } = require("../models/Admin.js");
 const User = require("../models/User.js");
+const UserInfo = require("../models/UserInfo.js");
+const friendshipModel = require("../models/friendshipModel.js");
+const gameplaySchema = require("../models/gameplaySchema.js");
 
 const getDashboardStats = async (req, res) => {
   try {
@@ -8,7 +12,16 @@ const getDashboardStats = async (req, res) => {
     const currentDay = "2023-7-31";
 
     /* Recent Total users */
-    const totalUsers = await User.count()
+    const totalUsers = await User.count();
+
+    // total friendship created
+    const totalFriendship = await friendshipModel.count();
+
+    //total gameplayed
+    const totalGameplayed = await gameplaySchema.count();
+
+    // Total active users
+    const totalActiveUsers = await UserInfo.count({status: {$eq: "Active"}});
 
     // All users
     const users = await User.find()
@@ -17,6 +30,9 @@ const getDashboardStats = async (req, res) => {
 
     res.status(200).json({
       totalUsers,
+      totalActiveUsers,
+      totalFriendship,
+      totalGameplayed,
       users
     });
   } catch (error) {

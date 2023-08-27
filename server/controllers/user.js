@@ -1,4 +1,6 @@
 const User = require("../models/User.js");
+const UserStats = require("../models/UserStats.js");
+const UserInfo = require("../models/UserInfo.js");
 
 const getUsers = async (req, res) => {
   try {
@@ -40,6 +42,40 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getUserStatsInfo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const userStats = await UserStats.find({userId: id});
+    const [ totalTimeSpent, totalDeaths, totalKills, totalTokens] = userStats;
+    
+    const userInfo = await UserInfo.find({userId: id});
+
+    const [username, country, state, friends, status, ip, devicetype] = userInfo;
+
+    // const userStatsInfo = {
+    //   username: username,
+    //   totalTimeSpent: totalTimeSpent,
+    //   totalDeaths: totalDeaths,
+    //   totalKills: totalKills,
+    //   totalTokens: totalTokens,
+    //   country: country,
+    //   state: state,
+    //   friends: friends,
+    //   status: status,
+    //   ip: ip,
+    //   devicetype: devicetype
+    // }
+    // const userInfoCountry = u
+    res.status(200).json({
+      userStats, userInfo
+    })
+  }catch (error) {
+    res.status(404).json({message: error.message})
+  }
+}
+
 module.exports = {
-  getUsers
+  getUsers,
+  getUserStatsInfo
 }

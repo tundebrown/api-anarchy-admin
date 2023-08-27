@@ -16,13 +16,13 @@ export const tokensDark = {
       1000: "#000000", // manually adjusted
     },
     primary: {
-      // purple
+      // purple 
     100: "#cecee0",
     200: "#a2a2b8",
-    300: "#8d5f8d",
-    400: "#59336d",
-    500: "#542560",
-    600: "#421956", // manually adjusted
+    300: "#6a4b6a",  //Previous: #8d5f8d
+    400: "#341d40", //Previous: #59336d
+    500: "#422749",   //Previous: #542560
+    600: "#2c1d34", // manually adjusted... previous: #421956
     700: "#341834",
     800: "#200832",
     900: "#100619",

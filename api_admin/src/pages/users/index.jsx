@@ -1,9 +1,86 @@
 import React, { useState } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box, Button, IconButton, MenuItem, Popover, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetUserQuery } from "../../state/api";
 import Header from "../../components/Header";
 import DataGridCustomToolbar from "../../components/DataGridCustomToolbar";
+import { useNavigate } from "react-router-dom";
+import Iconify from "../../components/Iconify";
+import { fToNow } from '../../utils/formatTime';
+
+const renderUserStatButton = (params) => {
+  const navigate = useNavigate();
+  return (
+      <strong>
+          <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              style={{ marginLeft: 16 }}
+              onClick={() => {
+                  // console.log(params.row._id)
+                  navigate(`/singleuserstats/${params.row._id}`)
+              }}
+          >
+              User Info
+          </Button>
+      </strong>
+  )
+}
+
+const actionMenu = (params) => {
+  const [open, setOpen] = useState(null);
+
+  const handleOpenMenu = (event) => {
+    setOpen(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setOpen(null);
+  };
+  const handleEdit = () =>{
+      console.log(params.row._id)
+  }
+
+  const handleDelete = () =>{
+    console.log(params.row._id)
+  }
+  return (
+    <>
+    <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                            <Iconify icon={'eva:more-vertical-fill'} />
+                          </IconButton>
+     <Popover
+        open={Boolean(open)}
+        anchorEl={open}
+         onClose={handleCloseMenu}
+         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        PaperProps={{
+           sx: {
+               p: 1,
+               width: 140,
+               '& .MuiMenuItem-root': {
+               px: 1,
+               typography: 'body2',
+              borderRadius: 0.75,
+             },
+          },
+         }}
+       >
+         <MenuItem onClick={handleEdit}>
+           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+           Edit
+         </MenuItem>
+    
+         <MenuItem sx={{ color: 'error.main' }} onClick={handleDelete}>
+           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+           Delete
+         </MenuItem>
+       </Popover>
+    </>
+    )
+  }
 
 const Users = () => {
   const theme = useTheme();
@@ -22,14 +99,15 @@ const Users = () => {
     search,
   });
 
-  console.log(data)
+  // console.log(data)
 
 
   const columns = [
     {
       field: "_id",
-      headerName: "ID",
-      flex: 1,
+      headerName: '#', 
+      filterable: false,
+      renderCell:(index) => index.api.getRowIndex(index.row._id) + 1
     },
     {
       field: "username",
@@ -40,18 +118,48 @@ const Users = () => {
       field: "createdAt",
       headerName: "CreatedAt",
       flex: 1,
+      renderCell: (params) => {
+        const formattedDate = fToNow(params.row.createdAt); // Calculate array length here
+        return <span>{formattedDate}</span>;
+      },
     },
     {
-      field: "walletAddress",
-      headerName: "Wallet Address",
+      field: "isOnline",
+      headerName: "Status",
       flex: 1,
       sortable: false,
+      renderCell: (params) => {
+        let status;
+        const checkStatus = params.row.isOnline; // Calculate array length here
+        if(checkStatus){
+          status = "Online"
+        } else {
+          status = "Offline"
+        }
+        return <span>{status}</span>;
+      },
     },
     {
-      field: "lastUpdate",
-      headerName: "Last Update",
-      flex: 1,
-    },
+      field: 'lastUpdate',
+      headerName: 'UserStats/UserInfo',
+      width: 150,
+      renderCell: renderUserStatButton,
+      disableClickEventBubbling: true,
+  },
+//   {
+//     field: 'walletAddress',
+//     headerName: 'Action',
+//     width: 150,
+//     renderCell: renderUserDeleteButton,
+//     disableClickEventBubbling: true,
+// },
+{
+  field: '',
+  headerName: 'Action',
+  width: 150,
+  renderCell: actionMenu,
+  disableClickEventBubbling: true,
+},
   ];
 
   return (

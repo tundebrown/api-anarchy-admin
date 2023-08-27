@@ -23,15 +23,41 @@ import {
   MenuItem,
   useTheme,
 } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const handleClose = () => {
+    setAnchorEl(null);
+
+
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await axios
+        .get("http://localhost:5001/api/v1/authadmin/logout", {
+          withCredentials: true,
+          credentials: "same-origin",
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
+
+      // navigate("/login");
+        window.location.href = '/login';
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <AppBar
@@ -105,7 +131,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                   fontSize="0.75rem"
                   sx={{ color: theme.palette.secondary[200] }}
                 >
-                  {user.occupation}
+                  {user.role}
                 </Typography>
               </Box>
               <ArrowDropDownOutlined
@@ -118,7 +144,10 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              <MenuItem onClick={handleClose}>Log Out</MenuItem>
+              <MenuItem>{user.email}</MenuItem>
+              <MenuItem>Profile</MenuItem>
+              <hr style={{backgroundColor: theme.palette.secondary}}/>
+              <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
             </Menu>
           </FlexBetween>
         </FlexBetween>

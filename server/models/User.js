@@ -23,6 +23,18 @@ const userSchema = new mongoose.Schema({
             required: true
         },
     }],
+    friends: [
+        {
+          friendId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }, // Referencing 'user' model
+          status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
+        },
+      ],
+
+    isOnline: {
+        type: Boolean,
+        default: false
+    },
+
 
     socialLogin: {
         type: Array,
@@ -50,11 +62,6 @@ const userSchema = new mongoose.Schema({
     activeskins: {
         type: Array
     },
-
-    friends: {
-        type: String
-    },
-
     networktype: {
         type: String
     },

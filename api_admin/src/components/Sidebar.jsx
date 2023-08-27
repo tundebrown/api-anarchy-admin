@@ -39,7 +39,7 @@ const navItems = [
     icon: <HomeOutlined />,
   },
   {
-    text: "Get Data",
+    text: "Report",
     icon: null,
   },
   {
@@ -47,17 +47,17 @@ const navItems = [
     icon: <Groups2Outlined />,
   },
   {
-    text: "Guest",
+    text: "Friendship",
     icon: <Groups2Outlined />,
   },
   {
     text: "Match",
     icon: <ReceiptLongOutlined />,
   },
-  {
-    text: "Locations",
-    icon: <PublicOutlined />,
-  },
+  // {
+  //   text: "Locations",
+  //   icon: <PublicOutlined />,
+  // },
   {
     text: "Statistics",
     icon: null,
@@ -66,10 +66,10 @@ const navItems = [
     text: "UserStats",
     icon: <PointOfSaleOutlined />,
   },
-  {
-    text: "GuestStats",
-    icon: <TodayOutlined />,
-  },
+  // {
+  //   text: "GuestStats",
+  //   icon: <TodayOutlined />,
+  // },
   {
     text: "MatchStats",
     icon: <CalendarMonthOutlined />,
@@ -80,6 +80,10 @@ const navItems = [
   },
   {
     text: "Admin",
+    icon: <AdminPanelSettingsOutlined />,
+  },
+  {
+    text: "CreateAdmin",
     icon: <AdminPanelSettingsOutlined />,
   },
 ];
@@ -209,7 +213,7 @@ const Sidebar = ({
                   fontSize="0.8rem"
                   sx={{ color: theme.palette.secondary[200] }}
                 >
-                  {user.occupation}
+                  {user.role}
                 </Typography>
               </Box>
               <SettingsOutlined
