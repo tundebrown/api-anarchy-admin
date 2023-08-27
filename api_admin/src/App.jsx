@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "./theme";
 import Layout from "./pages/layout";
 import Dashboard from "./pages/dashboard";
@@ -60,7 +60,7 @@ function App() {
   return (
     <div className="app">
       <GlobalContext.Provider value={adminData}>
-        <BrowserRouter>
+        <HashRouter>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Routes>
@@ -145,7 +145,7 @@ function App() {
               ) : null}
             </Routes>
           </ThemeProvider>
-        </BrowserRouter>
+        </HashRouter>
       </GlobalContext.Provider>
     </div>
   );
