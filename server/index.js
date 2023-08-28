@@ -91,8 +91,17 @@ app.post("/api/v1/login", (req, res, next) => {
 });
 
 app.get("/api/v1/authadmin", (req, res) => {
-  res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
-  console.log(req.user);
+  
+  if (req.isAuthenticated()) {
+    // Access user data via req.user
+    res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+    console.log("User is authenticated");
+    // const user = req.user;
+    // res.render('profile', { user });
+  } else {
+    // res.send("user is not authenticated");
+    console.log("User is not authenticated");
+  }
 });
 
 app.get("/api/v1/authadmin/logout", (req, res, next) => {

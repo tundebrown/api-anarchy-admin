@@ -126,7 +126,7 @@ export default function Login() {
         console.log("Status: successfully authenticated");
 
         // navigate('/dashboard');
-        // window.location.href = '/dashboard';
+        window.location.href = '/dashboard';
       } else {
         console.log("status: failure");
         setFailed(res.data)
