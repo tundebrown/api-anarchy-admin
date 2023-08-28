@@ -43,7 +43,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const handleLogOut = async () => {
     try {
       await axios
-        .get("http://localhost:5001/api/v1/authadmin/logout", {
+        .get(`${import.meta.env.VITE_BASE_URL}/api/v1/authadmin/logout`, {
           withCredentials: true,
           credentials: "same-origin",
         })
