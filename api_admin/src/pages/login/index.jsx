@@ -124,7 +124,7 @@ export default function Login() {
     }).then((res) => {
       if (res.data === "Successfully Authenticated") {
         console.log("Status: success");
-        
+
         // navigate('/dashboard');
         window.location.href = '/dashboard';
       } else {

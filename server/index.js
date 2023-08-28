@@ -76,7 +76,7 @@ app.post("/api/v1/login",  (req, res, next) => {
       req.logIn(user, (err) => {
         if (err) throw err;
         res.send("Successfully Authenticated");
-        console.log(req.user);
+        console.log("Successfully authenticate");
       });
     }
   })(req, res, next);
@@ -84,6 +84,7 @@ app.post("/api/v1/login",  (req, res, next) => {
 
 app.get("/api/v1/authadmin", (req, res) => {
   res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+  console.log(req.user)
 });
 
 app.get("/api/v1/authadmin/logout", (req, res, next) => {

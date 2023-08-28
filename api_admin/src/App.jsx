@@ -42,14 +42,14 @@ function App() {
         if (res.data) {
           setAdminData(res.data);
           setIsLoggedIn(true);
-          // console.log(res.data);
+          console.log(res.data);
         }
       });
     };
 
     getUser();
   }, []);
-  // console.log(isLoggedIn);
+  console.log(`to dashboard status: ${isLoggedIn}`);
 
   // const contextValue = {
   //   firstName: "Brown",
