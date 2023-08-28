@@ -53,10 +53,10 @@ app.use(
       mongoUrl: process.env.MONGO_URL,
       collectionName: "sessions",
     }),
-    // cookie: {
-    //   secure: false,
-    //   sameSite: "none",
-    // },
+    cookie: {
+      secure: true,
+      sameSite: "none",
+    },
   })
 );
 app.use(cookieParser("secretcode"));
