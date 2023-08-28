@@ -39,7 +39,7 @@ function App() {
         withCredentials: true,
         url: `${import.meta.env.VITE_BASE_URL}/api/v1/authadmin`,
       }).then((res) => {
-        if (res.data) {
+        if (res.data.email) {
           setAdminData(res.data);
           setIsLoggedIn(true);
           console.log(res.data);

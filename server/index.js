@@ -9,6 +9,7 @@ const session = require("express-session");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const path = require('path');
 const userRoutes = require("./routes/user.js");
 const friendRoutes = require("./routes/friendship.js");
 const friendInfoRoutes = require("./routes/friendshipinfo.js");
@@ -53,16 +54,21 @@ app.use(
       mongoUrl: process.env.MONGO_URL,
       collectionName: "sessions",
     }),
-    cookie: {
-      secure: true,
-      sameSite: "none",
-    },
+    // cookie: {
+    //   domain: process.env.PRD_URL,
+    //   secure: true,
+    //   sameSite: "none",
+    // },
   })
 );
 app.use(cookieParser("secretcode"));
 app.use(passport.initialize());
 app.use(passport.session());
 require("./passportConfig")(passport);
+
+// Static react app
+// Serve the static React build
+app.use(express.static(path.join(__dirname, '/frontend')));
 
 /* ROUTES */
 app.use("/api", userRoutes);
@@ -90,6 +96,7 @@ app.post("/api/v1/login", (req, res, next) => {
   })(req, res, next);
 });
 
+// let user = {email: "Admin", firstName: "Admin", lastName: "Admin"};
 app.get("/api/v1/authadmin", (req, res) => {
   
   if (req.isAuthenticated()) {
@@ -99,7 +106,7 @@ app.get("/api/v1/authadmin", (req, res) => {
     // const user = req.user;
     // res.render('profile', { user });
   } else {
-    // res.send("user is not authenticated");
+
     console.log("User is not authenticated");
   }
 });
@@ -109,6 +116,7 @@ app.get("/api/v1/authadmin/logout", (req, res, next) => {
     if (err) {
       return next(err);
     }
+
     // res.redirect('/');
     res.status(200).send("Logged out successfully");
   });
@@ -125,6 +133,10 @@ app.get("/api/v1/authadmin/logout", (req, res, next) => {
     }
   });
   // res.redirect('/')
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
 
 // app.post("/login", (req, res, next) => {
