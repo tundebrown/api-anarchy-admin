@@ -123,10 +123,10 @@ export default function Login() {
       url: `${import.meta.env.VITE_BASE_URL}/api/v1/login`,
     }).then((res) => {
       if (res.data === "Successfully Authenticated") {
-        console.log("Status: success");
+        console.log("Status: successfully authenticated");
 
         // navigate('/dashboard');
-        window.location.href = '/dashboard';
+        // window.location.href = '/dashboard';
       } else {
         console.log("status: failure");
         setFailed(res.data)
