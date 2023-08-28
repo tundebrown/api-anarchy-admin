@@ -48,17 +48,13 @@ app.use(
     secret: "secretcode",
     resave: true,
     saveUninitialized: true,
-    secure: true,
-    cookie: {
-      domain: process.env.CORS_URL,
-    }
   })
 );
 app.use(cookieParser("secretcode"));
 app.use(passport.initialize());
 app.use(passport.session());
 require("./passportConfig")(passport);
-app.set('trust proxy', true); // Trust proxy to receive correct headers
+
 
 /* ROUTES */
 app.use("/api", userRoutes);  
@@ -70,10 +66,6 @@ app.use("/api/report", friendInfoRoutes);
 app.use("/api/report", matchStatsRoutes);  
 app.use("/general", generalRoutes);
 app.use("/api/v1/register", authRoutes);
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
-});
 // app.use("/api/v1/login", loginAuthRoutes);
 
 app.post("/api/v1/login",  (req, res, next) => {
