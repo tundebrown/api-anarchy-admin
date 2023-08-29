@@ -99,7 +99,7 @@ const SingleFriendStats = () => {
                     id: faker.string.uuid(),
                     title: _.username,
                     description: _.status,
-                    image: `/assets/images/covers/cover_${index + 1}.jpg`,
+                    image: `/assets/images/avatars/avatar_${index + 1}.jpg`,
                     postedAt: faker.date.recent(),
                   }))}
                 />
