@@ -15,7 +15,7 @@ import { Alert, useTheme } from "@mui/material";
 import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -43,6 +43,10 @@ export default function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const emailRef = useRef(null);
+
+  const passwordRef = useRef(null);
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -55,9 +59,10 @@ export default function Login() {
 
   useEffect(() => {
     setInterval(() => {
-      // setSuccess("");
-      setFailed("");
-    }, 10000);
+        setEmailError("");
+        setPasswordError("");
+        setFailed("");
+    }, 20000);
   }, []);
 
   const isEmailValid = (email) => {
@@ -91,32 +96,32 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // setEmail(data.get("email"));
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-    let regData;
-    if (
-      email === "" ||
-      password === "" ||
-      emailError.length > 1 ||
-      passwordError.length > 1
-    ) {
-      console.log("Invalid Inputs");
-      setFailed("invalid inputs")
-      return;
-    } else {
-      regData = {
-        email: email,
-        password: password,
-        remember: data.get("remember"),
-      };
-      // console.log(regData);
-    }
+    if(emailRef.current || passwordRef.current){
+      emailRef.current.focus();
+      passwordRef.current.focus();
+      let regData;
+      if (emailRef.current.value === "" || !isEmailValid(emailRef.current.value)) {
+          console.log("Invalid email address");
+          setEmailError("Invalid email address");
+          // setFailed("invalid inputs")
+          return;
+        } 
+        if (passwordRef.current.value === "") {
+          console.log("Please enter password");
+          setPasswordError("Please enter password");
+          // setFailed("invalid inputs")
+          return;
+        } 
 
-    Axios({
+          regData = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value
+            // password: password,
+            // remember: data.get("remember"),
+          };
+          // console.log(regData);
+
+           Axios({
       method: "POST",
       data: regData,
       withCredentials: true,
@@ -133,25 +138,13 @@ export default function Login() {
       }
       // console.log(res);
     });
-
-    // getUser();
-
-    //     event.target.reset();
+        
+    }
   };
-
-  // const getUser = () => {
-  //   Axios({
-  //     method: "GET",
-  //     withCredentials: true,
-  //     url: "http://localhost:5001/api/v1/authadmin",
-  //   }).then((res) => {
-  //     setData(res.data);
-  //     console.log(res.data);
-  //   });
-  // };
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
+
       <CssBaseline />
       <Grid
         item
@@ -246,7 +239,9 @@ export default function Login() {
             <TextField
               color="secondary"
               margin="normal"
-              onChange={validateEmail}
+              // onInput={validateEmail}
+              // onChange={validateEmail}
+              inputRef={emailRef}
               required
               fullWidth
               id="email"
@@ -260,7 +255,9 @@ export default function Login() {
             <TextField
               color="secondary"
               margin="normal"
-              onChange={validatePassword}
+              // onInput={validatePassword}
+              // onChange={validatePassword}
+              inputRef={passwordRef}
               required
               fullWidth
               name="password"
@@ -268,6 +265,8 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              error={passwordError.length > 1}
+              helperText={passwordError}
             />
             <FormControlLabel
               control={

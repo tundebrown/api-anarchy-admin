@@ -60,7 +60,7 @@ function App() {
   return (
     <div className="app">
       <GlobalContext.Provider value={adminData}>
-        <HashRouter>
+        <BrowserRouter>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Routes>
@@ -145,7 +145,7 @@ function App() {
               ) : null}
             </Routes>
           </ThemeProvider>
-        </HashRouter>
+        </BrowserRouter>
       </GlobalContext.Provider>
     </div>
   );

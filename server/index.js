@@ -33,7 +33,19 @@ const MongoStore = require("connect-mongo");
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'", '*'],
+    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", '*'],
+    styleSrc: ["'self'", "'unsafe-inline'", '*'],
+    imgSrc: ["'self'", '*'],
+    fontSrc: ["'self'", '*'],
+    connectSrc: ["'self'", '*'],
+    mediaSrc: ["'self'", '*'],
+    objectSrc: ["'none'"],
+},
+}));
+
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
