@@ -37,7 +37,7 @@ const SingleFriendStats = () => {
 
   //   friendsId, status, friendsUsernames, username
 
-  if (data.dataOfFriends[0] && data.username) {
+  if (data?.dataOfFriends[0] && data?.username) {
     // setUserStats(data.userStats[0]);
     // setUserInfo(data.userInfo)
     // console.log(data.userStats[0]);
@@ -116,7 +116,7 @@ const SingleFriendStats = () => {
     );
   }
 
-  if (!data.dataOfFriends[0]) {
+  if (!data?.dataOfFriends[0]) {
     return (
       <Box m="1.5rem 2.5rem">
         <Header

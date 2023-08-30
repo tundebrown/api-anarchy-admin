@@ -34,7 +34,7 @@ const SingleUserStats = () => {
     );
   } 
   
-  if (data.userStats[0] && data.userInfo[0]) {
+  if (data?.userStats[0] && data?.userInfo[0]) {
     // setUserStats(data.userStats[0]);
     // setUserInfo(data.userInfo)
     // console.log(data.userStats[0]);
@@ -194,7 +194,7 @@ const SingleUserStats = () => {
     );
   } 
   
-  if(!data.userStats[0] || !data.userInfo[0]){
+  if(!data?.userStats[0] || !data?.userInfo[0]){
     return (
       <Box m="1.5rem 2.5rem">
         <Header
