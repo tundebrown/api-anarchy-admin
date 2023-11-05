@@ -57,50 +57,52 @@ const Notification = () => {
 
   const validateUserId = (e) => {
     setUserId(e.target.value);
-    if(!isBetween(userId.length, 2, 50)){
-      setUserIdError("Userid must be between 3 to 50 characters")
-      return true;
-    } else {
-      setUserIdError("")
-      return false;
-    }
-
+    // if(!isBetween(userId.length, 2, 50)){
+    //   setUserIdError("Userid must be between 3 to 50 characters")
+    //   return true;
+    // } else {
+    //   setUserIdError("")
+    //   return false;
+    // }
+    return true;
   };
 
   const validateUsername = (e) => {
     setUsername(e.target.value);
-    let decision = false;
-    if(!isBetween(username.length, 2, 20)){
-      setUsernameError("Username must be between 3 to 20 characters")
-      decision = true;
-    } else {
-      setUsernameError("")
-      decision = false;
-    }
-    return decision;
+    // let decision = false;
+    // if(!isBetween(username.length, 2, 20)){
+    //   setUsernameError("Username must be between 3 to 20 characters")
+    //   decision = true;
+    // } else {
+    //   setUsernameError("")
+    //   decision = false;
+    // }
+    // return decision;
+    return true;
   };
 
   const validateBody = (e) => {
     setBody(e.target.value);
-    if(!isBetween(body.length, 2, 50)){
-      setBodyError("body must be between 3 to 200 characters")
-      return true;
-    } else {
-      setBodyError("")
-      return false;
-    }
-
+    // if(!isBetween(body.length, 2, 200)){
+    //   setBodyError("body must be between 3 to 200 characters")
+    //   return true;
+    // } else {
+    //   setBodyError("")
+    //   return false;
+    // }
+    return true;
   };
 
   const validateTitle = (e) => {
     setTitle(e.target.value);
-    if(!isBetween(title.length, 2, 50)){
-      setTitleError("title must be between 3 to 50 characters")
-      return true;
-    } else {
-      setTitleError("")
-      return false;
-    }
+    // if(!isBetween(title.length, 2, 50)){
+    //   setTitleError("title must be between 3 to 50 characters")
+    //   return true;
+    // } else {
+    //   setTitleError("")
+    //   return false;
+    // }
+    return true;
 
   };
 
@@ -116,7 +118,8 @@ const Notification = () => {
     // });
     let regData
     if(userId === "" || username === "" || title === "" || body === "" || userIdError.length > 1 || usernameError.length > 1 || titleError.length > 1 || bodyError.length > 1) {
-      console.log("Invalid Inputs")
+      console.log("Invalid Inputs");
+      setFailed("Invalid Inputs")
       return
     } else {
       regData = {
@@ -131,24 +134,28 @@ const Notification = () => {
       Axios({
         method: "POST",
         data: regData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
         withCredentials: false,
         url: `https://data.anarchygames.in/api/v1/pushnotification/send-notification`,
       }).then((res) => {
+        // console.log(`data: ${res.data}`)
         if(res.data){
           if (res.data.error){
             setFailed(res.data.error)
           } else {
-            setSuccess(res.data)
+            setSuccess("Notification Sent Successfully")
           }
         }
 
-        // if(res.data === "Admin Created") {
-        //   setSuccess("Admin registered successfully")
-        // }
+        if(res.data === "Admin Created") {
+          setSuccess("Admin registered successfully")
+        }
 
         console.log(res.data)});
 
-        event.target.reset();
+        // event.target.reset();
   };
 
   return (
