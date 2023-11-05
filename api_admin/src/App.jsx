@@ -25,6 +25,7 @@ import Login from "./pages/login";
 import CreateAdmin from "./pages/createadmin";
 import SingleUserStats from "./pages/singleuserstats";
 import SingleFriendStats from "./pages/singlefriendstats";
+import Notification from "./pages/notification";
 import GlobalContext from "./GlobalContext";
 // import ProtectedRoute from "./components/ProtectedRoute";
 // import PageNotFound from "./components/PageNotFound";
@@ -125,6 +126,10 @@ function App() {
 
                 {isLoggedIn ? (
                   <Route path="/matchstats" element={<MatchStats />} />
+                ) : null}
+
+                {isLoggedIn ? (
+                  <Route path="/notification" element={<Notification />} />
                 ) : null}
 
                 {isLoggedIn ? (

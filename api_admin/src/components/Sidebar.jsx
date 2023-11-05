@@ -27,6 +27,7 @@ import {
   AdminPanelSettingsOutlined,
   TrendingUpOutlined,
   PieChartOutlined,
+  NotificationAddOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -66,13 +67,17 @@ const navItems = [
     text: "UserStats",
     icon: <PointOfSaleOutlined />,
   },
-  // {
-  //   text: "GuestStats",
-  //   icon: <TodayOutlined />,
-  // },
   {
     text: "MatchStats",
     icon: <CalendarMonthOutlined />,
+  },
+  {
+    text: "Test",
+    icon: null,
+  },
+  {
+    text: "Notification",
+    icon: <NotificationAddOutlined />,
   },
   {
     text: "Management",
