@@ -147,6 +147,8 @@ app.get("/api/v1/authadmin/logout", (req, res, next) => {
   // res.redirect('/')
 });
 
+
+//For production
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
