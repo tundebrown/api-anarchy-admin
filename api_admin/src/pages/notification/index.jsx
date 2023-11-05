@@ -131,7 +131,7 @@ const Notification = () => {
       Axios({
         method: "POST",
         data: regData,
-        withCredentials: true,
+        withCredentials: false,
         url: `https://data.anarchygames.in/api/v1/pushnotification/send-notification`,
       }).then((res) => {
         if(res.data){
